@@ -1,4 +1,3 @@
-import domain.Locker;
 import domain.Member;
 
 import javax.persistence.EntityManager;
@@ -10,25 +9,26 @@ public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
         EntityManager em = emf.createEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-        Member m1 = new Member();
-        m1.setName("테스트");
-        em.persist(m1);
-//        em.flush();
-        Locker l1 = new Locker();
-        l1.setMemberId(m1);
+        EntityTransaction tx = em.getTransaction();
 
-        Locker l2 = new Locker();
-        l2.setMemberId(m1);
+        tx.begin();
+        try {
+            Member member1 = new Member(170L, "C");
+            Member member2 = new Member(180L, "D");
+
+            em.persist(member1);
+            em.persist(member2);
+
+            System.out.println("=============");
 
 
-        em.persist(l1);
-        em.persist(l2);
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        } finally {
+            em.close();
+        }
 
-        transaction.commit();
-
-        em.close();
         emf.close();
     }
 }

@@ -1,24 +1,27 @@
 package domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Member {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO, generator = "MEMBER_SEQ")
+    @Id
     Long id;
 
     String name;
 
-    public Long getId() {
-        return id;
+
+    public Member() {
+    }
+
+    public Member(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
