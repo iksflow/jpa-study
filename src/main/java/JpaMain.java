@@ -18,8 +18,9 @@ public class JpaMain {
 
             em.persist(member1);
             em.persist(member2);
-
+            em.flush();
             System.out.println("=============");
+
 
 
             tx.commit();
